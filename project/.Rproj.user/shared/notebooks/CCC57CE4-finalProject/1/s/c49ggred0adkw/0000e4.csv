@@ -1,0 +1,1 @@
+"0","lines(training$`Quarter (#)`, predict(linmod, training), col=""red"")"

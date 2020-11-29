@@ -1,0 +1,2 @@
+"0","lines(training$`Quarter (#)`, ts_components$seasonal + ts_components$trend, col=""green"")"
+"0",""

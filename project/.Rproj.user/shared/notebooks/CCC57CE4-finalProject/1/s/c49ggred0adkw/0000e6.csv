@@ -1,0 +1,2 @@
+"0",""
+"0","plot(training$`Quarter (#)`, training$`Units Sales (millions)`, col=""black"", main=""fit of linear regression model to training data"", ""xlab""=""date"", ylab=""training data in black, time series in green"" )"

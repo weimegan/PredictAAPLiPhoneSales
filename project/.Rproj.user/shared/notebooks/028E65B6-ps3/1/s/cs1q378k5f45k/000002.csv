@@ -1,0 +1,6 @@
+"0","#problem 2-1"
+"0","#install.packages(""anytime"")"
+"0","library(anytime)"
+"0","goog = read.csv(""MoisturizerSalesGoogleTrend.csv"")"
+"0","goog$Date <-anytime(goog$Date)"
+"0","plot(goog$Date, goog$MoisturizerSales, main=""Sales vs Time"", xlab=""date"",ylab=""sales"")"

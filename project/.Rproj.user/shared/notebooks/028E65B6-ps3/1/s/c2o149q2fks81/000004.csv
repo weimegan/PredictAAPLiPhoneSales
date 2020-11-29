@@ -1,0 +1,5 @@
+"0","```r
+
+#linear regression model
+plot(g_train$Date, g_train$MoisturizerSales, main=\"Training Data\", xlab=\"Moisturizer Sales\", ylab=\"Date\")
+```"

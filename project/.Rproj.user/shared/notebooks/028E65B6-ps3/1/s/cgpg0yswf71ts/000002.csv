@@ -1,0 +1,26 @@
+"0","```r
+#problem 2-6
+ts_components_random = ts_components$random
+random_Error = na.omit(ts_components_random)
+arima = auto.arima(random_Error)
+arima
+```"
+"1","Series: random_Error 
+ARIMA(2,0,0) with non-zero mean 
+
+Coefficients:
+         ar1     ar2    mean
+      -0.015  -0.078  -0.003
+s.e.   0.091   0.091   0.002
+
+sigma^2 estimated as 0.000751:  log likelihood=274
+AIC=-540   AICc=-539   BIC=-528
+"
+"0","```r
+accuracy(arima)
+```"
+"1","                   ME   RMSE    MAE MPE MAPE
+Training set 6.44e-05 0.0271 0.0201 106  139
+              MASE    ACF1
+Training set 0.562 0.00874
+"

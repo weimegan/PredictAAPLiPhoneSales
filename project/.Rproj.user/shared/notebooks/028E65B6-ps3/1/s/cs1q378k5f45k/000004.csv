@@ -1,0 +1,1 @@
+"0","plot(goog$Date, goog$GoogleTrendVolumeEczema,main=""Trends vs Time"",xlab=""date"",ylab=""trends"")"

@@ -1,0 +1,9 @@
+"0","```r
+#problem 2-7
+#time series model
+fitted_arima = fitted(arima)
+resid_arima = residuals(arima)
+ts_fitted = fitted_arima + ts_components$trend + ts_components$seasonal
+plot(g_train_ts, main=\"Time Series Model\")
+lines(ts_fitted, col=\"blue\")
+```"

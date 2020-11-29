@@ -1,0 +1,81 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+#install.packages("readxl")
+library(readxl)
+#import dataset and have training and testing 
+all_data <- read_excel("all_data.xlsx")
+testing <- read_excel("testing.xlsx")
+training <- read_excel("training.xlsx")
+#search for collinearity
+datacor <- all_data[, c(6, 9, 10)]
+cor(datacor)
+```
+
+```{r}
+#construct linear regression
+linmod <- lm(training$`Units Sales (millions)` ~ training$`Phones Available`)
+linmodpredict <- predict(linmod, testing)
+summary(linmod)
+crazyreg <- lm(all_data$`Units Sales (millions)`~ all_data$`Phones Available` + all_data$`total colorways` + all_data$`camera options`)
+summary(crazyreg)
+```
+
+```{r}
+#plot residuals vs fitted
+plot(linmod, 1)
+```
+
+```{r}
+#accuracy measures
+library(DMwR)
+actual <- testing$`Units Sales (millions)`
+regr.eval(actual, linmodpredict)
+```
+
+```{r}
+#construct time series
+library("TTR")
+library("grDevices")
+library("forecast")
+
+train_ts <- ts(training$`Units Sales (millions)`, frequency=4)
+ts_components = decompose(train_ts)
+plot(ts_components)
+```
+```{r}
+#plot residuals
+aapllinmod <- lm(`Units Sales (millions)` ~ `Quarter (#)`, data=training)
+plot(training$`Quarter (#)`, aapllinmod$residuals, main="residuals", xlab="date", ylab="residuals")
+plot(aapllinmod, 1)
+```
+```{r}
+#acf
+acf(training$`Units Sales (millions)`)
+```
+```{r}
+#compare models
+plot(training$`Quarter (#)`, training$`Units Sales (millions)`, col="black", main="fit of linear regression model to training data", "xlab"="date", ylab="training data in black, model prediction in red" )
+lines(training$`Quarter (#)`, training$`Units Sales (millions)`, col="black")
+lines(training$`Quarter (#)`, predict(linmod, training), col="red")
+
+plot(training$`Quarter (#)`, training$`Units Sales (millions)`, col="black", main="fit of linear regression model to training data", "xlab"="date", ylab="training data in black, time series in green" )
+lines(training$`Quarter (#)`, training$`Units Sales (millions)`, col="black")
+lines(training$`Quarter (#)`, ts_components$seasonal + ts_components$trend, col="green")
+
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+

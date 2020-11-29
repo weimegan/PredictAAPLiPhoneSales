@@ -1,0 +1,3 @@
+"0","#plot residuals"
+"0","aapllinmod <- lm(`Units Sales (millions)` ~ `Quarter (#)`, data=training)"
+"0","plot(training$`Quarter (#)`, aapllinmod$residuals, main=""residuals"", xlab=""date"", ylab=""residuals"")"

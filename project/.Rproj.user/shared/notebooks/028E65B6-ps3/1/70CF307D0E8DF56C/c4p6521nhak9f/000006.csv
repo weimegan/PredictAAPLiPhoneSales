@@ -1,0 +1,4 @@
+"0","#problem 2-3"
+"0","#plot(g_test$Date, resid(model_test), xlab=""Time"", ylab=""Residuals"")"
+"0","plot(g_test$Date, model_test$residuals, main = ""residuals for linear regression of moisturizer sales with google trends data"","
+"0","     xlab = ""date"", ylab = ""residuals"")"

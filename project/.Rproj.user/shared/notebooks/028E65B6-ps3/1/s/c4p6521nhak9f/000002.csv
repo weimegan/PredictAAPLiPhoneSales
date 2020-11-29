@@ -1,0 +1,2 @@
+"0","#problem 2-3"
+"0","plot(g_test$Date, resid(model_test), xlab=""Time"", ylab=""Residuals"")"

@@ -1,0 +1,7 @@
+"0","```r
+#bonus
+bonus_model = lm(resid_arima ~GoogleTrendVolumeEczema, data = goog)
+```"
+"1","Error in model.frame.default(formula = resid_arima ~ GoogleTrendVolumeEczema,  : 
+  variable lengths differ (found for 'GoogleTrendVolumeEczema')
+"

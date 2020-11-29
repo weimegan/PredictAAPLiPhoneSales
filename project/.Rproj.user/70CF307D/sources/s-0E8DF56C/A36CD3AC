@@ -1,0 +1,25 @@
+{
+    "id": "A36CD3AC",
+    "path": "~/Documents/fall2020/15.780/pset/ps3/ps3.Rmd",
+    "project_path": null,
+    "type": "r_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": true,
+    "created": 1606625540395.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "chunk_output_type": "inline",
+        "cursorPosition": "86,29",
+        "scrollLine": "83"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1606625698,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1606626693877,
+    "read_only": false,
+    "read_only_alternatives": []
+}

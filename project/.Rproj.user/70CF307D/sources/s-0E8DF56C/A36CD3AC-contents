@@ -1,0 +1,139 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+#problem 1
+ufc = read.csv("UFC_data.csv")
+ufc
+```
+```{r}
+#problem 1-1
+cor(ufc[,2:8])
+
+```
+
+
+
+
+
+
+```{r}
+#problem 1-2a
+ufc_train <- head(x=ufc$Tweets, y=ufc$Buyrate, round(length(ufc$Tweets)*0.7))
+ufc_test <- tail(x=ufc$Tweets, y=ufc$Buyrate, round(length(ufc$Tweets)*0.3))
+#ufc_train
+#ufc_test
+model <- lm(ufc$Buyrate ~ ufc$Tweets)
+summary(model)
+```
+```{r}
+#problem 1-2b
+plot(model,1)
+```
+```{r}
+#problem 1-3
+#install.packages("car")
+library(car)
+model_avsent <- lm(ufc$Buyrate ~ ufc$Tweets + ufc$Average_Sentiment)
+car::vif(model_avsent)
+```
+
+```{r}
+#problem 1-4
+#summary(model)
+accuracy(model)
+```
+
+```{r}
+#problem 1-5
+
+library(DAAG)
+results <- CVlm(form.lm=Buyrate ~ Tweets, m=4,data=ufc, dots=FALSE, seed=80, plotit=c("Observed", "Residual"),main="k-fold valiidation", legend.pos="topleft",printit=TRUE)
+```
+
+```{r}
+#problem 2-1
+#install.packages("anytime")
+library(anytime)
+goog = read.csv("MoisturizerSalesGoogleTrend.csv")
+goog$Date <-anytime(goog$Date)
+plot(goog$Date, goog$MoisturizerSales, main="Sales vs Time", xlab="date",ylab="sales")
+plot(goog$Date, goog$GoogleTrendVolumeEczema,main="Trends vs Time",xlab="date",ylab="trends")
+```
+
+```{r}
+#problem 2-2
+g_train <- subset(goog, goog$Date <= anytime("2013-12-29"))
+g_test <- subset(goog, goog$Date > anytime("2013-12-29"))
+model_test <- lm(g_test$MoisturizerSales ~ g_test$GoogleTrendVolumeEczema, data=g_test)
+summary(model_test)
+accuracy(model_test)
+```
+
+```{r}
+#problem 2-3
+plot(g_test$Date, resid(model_test), xlab="Time", ylab="Residuals")
+
+```
+
+```{r}
+#problem 2-4
+acf(g_train$MoisturizerSales)
+```
+
+```{r}
+#problem 2-5
+library("TTR")
+library("grDevices")
+library("forecast")
+
+g_train_ts <- ts(g_train$MoisturizerSales, frequency=52)
+g_test_ts <- ts(g_train$MoisturizerSales, frequency=52)
+
+ts_components = decompose(g_train_ts)
+
+plot(ts_components)
+```
+
+```{r}
+#problem 2-6
+ts_components_random = ts_components$random
+random_Error = na.omit(ts_components_random)
+arima = auto.arima(random_Error)
+arima
+accuracy(arima)
+```
+
+```{r}
+#problem 2-7
+#time series model
+fitted_arima = fitted(arima)
+resid_arima = residuals(arima)
+ts_fitted = fitted_arima + ts_components$trend + ts_components$seasonal
+plot(g_train_ts, main="Time Series Model")
+lines(ts_fitted, col="blue")
+
+#linear regression model
+plot(g_train$Date, g_train$MoisturizerSales, main="Training Data", xlab="Moisturizer Sales", ylab="Date")
+plot(model_test,1)
+```
+```{r}
+#bonus
+bonus_model = lm(resid_arima ~GoogleTrendVolumeEczema, data = goog)
+summary(bonus_model)
+
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
